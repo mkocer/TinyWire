@@ -35,54 +35,16 @@ Change Activity:
 #define _USI_TWI_SLAVE_H_
 
 
-
-/********************************************************************************
-
-                                    includes
-
-********************************************************************************/
-
-#include <stdbool.h>
-
-
-
 /********************************************************************************
 
                                    prototypes
 
 ********************************************************************************/
 
-void    usiTwiSlaveInit( uint8_t );
-void    usiTwiTransmitByte( uint8_t );
-uint8_t usiTwiReceiveByte( void );
-bool    usiTwiDataInReceiveBuffer( void );
-
-
-
-/********************************************************************************
-
-                           driver buffer definitions
-
-********************************************************************************/
-
-// permitted RX buffer sizes: 1, 2, 4, 8, 16, 32, 64, 128 or 256
-
-#define TWI_RX_BUFFER_SIZE  ( 32 ) // jjg was 16
-#define TWI_RX_BUFFER_MASK  ( TWI_RX_BUFFER_SIZE - 1 )
-
-#if ( TWI_RX_BUFFER_SIZE & TWI_RX_BUFFER_MASK )
-#  error TWI RX buffer size is not a power of 2
-#endif
-
-// permitted TX buffer sizes: 1, 2, 4, 8, 16, 32, 64, 128 or 256
-
-#define TWI_TX_BUFFER_SIZE ( 32 ) // jjg was 16
-#define TWI_TX_BUFFER_MASK ( TWI_TX_BUFFER_SIZE - 1 )
-
-#if ( TWI_TX_BUFFER_SIZE & TWI_TX_BUFFER_MASK )
-#  error TWI TX buffer size is not a power of 2
-#endif
-
-
+void    usiTwiSlaveInit( 
+	uint8_t,  	
+	uint8_t	(*onI2CReadFromRegister)(uint8_t reg),
+	void (*onI2CWriteToRegister)(uint8_t reg, uint8_t value)
+ );
 
 #endif  // ifndef _USI_TWI_SLAVE_H_
